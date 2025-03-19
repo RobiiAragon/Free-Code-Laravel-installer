@@ -19,6 +19,7 @@ class LaravelGUI:
         self.project_name = tk.StringVar()
         self.project_path = tk.StringVar()
         self.project_path.set(os.path.expanduser("~/Documents"))
+        self.command_running = False  # Variable para controlar si hay un comando en ejecución
         
         # Crear interfaz
         self.create_notebook()
@@ -50,6 +51,18 @@ class LaravelGUI:
         ttk.Label(path_frame, text="Ubicación:").pack(side="left", padx=5)
         ttk.Entry(path_frame, textvariable=self.project_path, width=50).pack(side="left", padx=5)
         ttk.Button(path_frame, text="Examinar", command=self.browse_directory).pack(side="left", padx=5)
+        
+        # Versión de Laravel
+        version_frame = ttk.Frame(new_project_frame)
+        version_frame.pack(fill="x", padx=20, pady=10)
+        ttk.Label(version_frame, text="Versión de Laravel:").pack(side="left", padx=5)
+        
+        # Lista de versiones disponibles
+        self.laravel_version = tk.StringVar()
+        versions = ["Última versión", "10.*", "9.*", "8.*", "7.*", "6.*"]
+        version_combo = ttk.Combobox(version_frame, textvariable=self.laravel_version, values=versions, width=20)
+        version_combo.current(0)
+        version_combo.pack(side="left", padx=5)
         
         # Opciones
         options_frame = ttk.LabelFrame(new_project_frame, text="Opciones")
@@ -109,6 +122,12 @@ class LaravelGUI:
         ttk.Button(model_frame, text="Crear Modelo", 
                   command=self.create_model).pack(side="left", padx=10)
     
+    def check_command_running(self):
+        if self.command_running:
+            messagebox.showwarning("Comando en ejecución", "Hay un comando en ejecución. Por favor espere a que termine.")
+            return True
+        return False
+    
     def browse_directory(self):
         directory = filedialog.askdirectory()
         if directory:
@@ -120,8 +139,12 @@ class LaravelGUI:
             self.existing_path.set(directory)
     
     def create_project(self):
+        if self.check_command_running():
+            return
+            
         name = self.project_name.get().strip()
         path = self.project_path.get().strip()
+        version = self.laravel_version.get()
         
         if not name:
             messagebox.showerror("Error", "Por favor ingrese un nombre para el proyecto")
@@ -145,8 +168,19 @@ class LaravelGUI:
             # Actualizar la GUI
             progress_window.update()
             
+            # Marcar que hay un comando en ejecución
+            self.command_running = True
+            
+            # Crear el proyecto con la versión seleccionada
+            version_param = None
+            if version != "Última versión":
+                version_param = version
+                
             # Crear el proyecto
-            result = self.laravel.create_project(name, path)
+            result = self.laravel.create_project(name, path, version_param)
+            
+            # Marcar que el comando ha terminado
+            self.command_running = False
             
             progress_window.destroy()
             
@@ -156,39 +190,57 @@ class LaravelGUI:
                 messagebox.showerror("Error", "No se pudo crear el proyecto. Verifique que tenga Composer instalado.")
                 
         except Exception as e:
+            self.command_running = False
             messagebox.showerror("Error", f"Ocurrió un error: {str(e)}")
     
     def run_server(self):
+        if self.check_command_running():
+            return
+            
         path = self.existing_path.get().strip()
         if not path or not os.path.exists(path):
             messagebox.showerror("Error", "Por favor seleccione un proyecto Laravel válido")
             return
             
         try:
+            self.command_running = True
             result = self.laravel.serve(path)
+            self.command_running = False
+            
             if result:
                 messagebox.showinfo("Servidor iniciado", "Servidor Laravel iniciado en http://127.0.0.1:8000")
             else:
                 messagebox.showerror("Error", "No se pudo iniciar el servidor")
         except Exception as e:
+            self.command_running = False
             messagebox.showerror("Error", f"Error al iniciar servidor: {str(e)}")
     
     def run_migrations(self):
+        if self.check_command_running():
+            return
+            
         path = self.existing_path.get().strip()
         if not path or not os.path.exists(path):
             messagebox.showerror("Error", "Por favor seleccione un proyecto Laravel válido")
             return
             
         try:
+            self.command_running = True
             result = self.laravel.migrate(path)
+            self.command_running = False
+            
             if result:
                 messagebox.showinfo("Éxito", "Migraciones ejecutadas correctamente")
             else:
                 messagebox.showerror("Error", "Error al ejecutar migraciones")
         except Exception as e:
+            self.command_running = False
             messagebox.showerror("Error", f"Error: {str(e)}")
     
     def create_controller(self):
+        if self.check_command_running():
+            return
+            
         path = self.existing_path.get().strip()
         name = self.controller_name.get().strip()
         
@@ -201,15 +253,22 @@ class LaravelGUI:
             return
             
         try:
+            self.command_running = True
             result = self.laravel.make_controller(path, name)
+            self.command_running = False
+            
             if result:
                 messagebox.showinfo("Éxito", f"Controlador {name} creado correctamente")
             else:
                 messagebox.showerror("Error", "No se pudo crear el controlador")
         except Exception as e:
+            self.command_running = False
             messagebox.showerror("Error", f"Error: {str(e)}")
     
     def create_model(self):
+        if self.check_command_running():
+            return
+            
         path = self.existing_path.get().strip()
         name = self.model_name.get().strip()
         
@@ -222,12 +281,16 @@ class LaravelGUI:
             return
             
         try:
+            self.command_running = True
             result = self.laravel.make_model(path, name)
+            self.command_running = False
+            
             if result:
                 messagebox.showinfo("Éxito", f"Modelo {name} creado correctamente")
             else:
                 messagebox.showerror("Error", "No se pudo crear el modelo")
         except Exception as e:
+            self.command_running = False
             messagebox.showerror("Error", f"Error: {str(e)}")
 
 if __name__ == "__main__":

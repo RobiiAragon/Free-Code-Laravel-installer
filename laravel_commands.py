@@ -24,10 +24,17 @@ class LaravelCommands:
             print(f"Excepción: {str(e)}")
             return False
     
-    def create_project(self, name, path):
-        """Crea un nuevo proyecto Laravel"""
+    def create_project(self, name, path, version=None):
+        """Crea un nuevo proyecto Laravel con una versión específica si se proporciona"""
         full_path = os.path.join(path, name)
-        command = ["composer", "create-project", "laravel/laravel", name]
+        
+        if version:
+            # Si se especifica una versión, usamos laravel/laravel seguido de la versión
+            command = ["composer", "create-project", f"laravel/laravel:{version}", name]
+        else:
+            # Si no se especifica versión, usar la última versión disponible
+            command = ["composer", "create-project", "laravel/laravel", name]
+            
         return self.run_command(command, cwd=path)
     
     def serve(self, project_path):
