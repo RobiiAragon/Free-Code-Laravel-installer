@@ -1,22 +1,18 @@
-# Instalador Visual de Laravel
+# Instalador Visual de Laravel (C# WinForms)
 
-Esta aplicación proporciona una interfaz gráfica para gestionar proyectos Laravel sin necesidad de usar la línea de comandos.
+Esta aplicación proporciona una interfaz gráfica para gestionar proyectos Laravel en Windows.
 
 ## Requisitos previos
 
-1. Python 3.6 o superior
-2. Composer instalado y disponible en el PATH del sistema
-3. PHP instalado y disponible en el PATH del sistema
+1. Composer instalado y disponible en el PATH del sistema
+2. PHP instalado y disponible en el PATH del sistema
 
-## Instalación
+## Instalación y uso
 
-No se requiere instalación adicional. Solo asegúrate de que Composer y PHP estén correctamente instalados en tu sistema.
-
-## Uso
-
-1. Ejecuta el programa con `python laravel_gui.py`
-2. Usa la pestaña "Nuevo Proyecto" para crear un nuevo proyecto Laravel
-3. Usa la pestaña "Proyecto Existente" para gestionar proyectos existentes
+1. Compila el proyecto con el script `build-windows.ps1`.
+2. Ejecuta el archivo `.exe` generado en la carpeta `LaravelWinForms/Program`.
+3. Usa la pestaña "Nuevo Proyecto" para crear un nuevo proyecto Laravel.
+4. Usa la pestaña "Proyecto Existente" para gestionar proyectos existentes.
 
 ## Características
 
