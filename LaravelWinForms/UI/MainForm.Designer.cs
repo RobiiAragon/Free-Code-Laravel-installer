@@ -31,55 +31,55 @@ namespace LaravelWinForms.UI
 
             // --- Nuevo Proyecto ---
             this.tabNew.Controls.AddRange(new Control[] {
-                new Label { Text = "Nombre del proyecto:", Top = 20, Left = 20, Width = 130 },
+                new Label { Text = "Project name:", Top = 20, Left = 20, Width = 130 },
                 txtProjectName,
-                new Label { Text = "Ubicación:", Top = 60, Left = 20, Width = 130 },
+                new Label { Text = "Location:", Top = 60, Left = 20, Width = 130 },
                 txtProjectPath,
                 btnBrowseNew,
-                new Label { Text = "Versión de Laravel:", Top = 100, Left = 20, Width = 130 },
+                new Label { Text = "Laravel version:", Top = 100, Left = 20, Width = 130 },
                 cmbVersion,
                 btnCreateProject
             });
             txtProjectName.SetBounds(160, 20, 200, 25);
             txtProjectPath.SetBounds(160, 60, 200, 25);
-            btnBrowseNew.Text = "Examinar";
+            btnBrowseNew.Text = "Browse…";
             btnBrowseNew.SetBounds(370, 60, 80, 25);
             btnBrowseNew.Click += btnBrowseNew_Click;
             cmbVersion.SetBounds(160, 100, 120, 25);
-            btnCreateProject.Text = "Crear Proyecto Laravel";
+            btnCreateProject.Text = "Create Laravel project";
             btnCreateProject.SetBounds(160, 140, 180, 30);
             btnCreateProject.Click += btnCreateProject_Click;
 
             // --- Proyecto Existente ---
             this.tabExisting.Controls.AddRange(new Control[] {
-                new Label { Text = "Ruta del proyecto:", Top = 20, Left = 20, Width = 130 },
+                new Label { Text = "Project folder:", Top = 20, Left = 20, Width = 130 },
                 txtExistingPath,
                 btnBrowseExisting,
                 btnServe,
                 btnMigrate,
-                new Label { Text = "Controlador:", Top = 120, Left = 20, Width = 130 },
+                new Label { Text = "Controller:", Top = 120, Left = 20, Width = 130 },
                 txtControllerName,
                 btnMakeController,
-                new Label { Text = "Modelo:", Top = 160, Left = 20, Width = 130 },
+                new Label { Text = "Model:", Top = 160, Left = 20, Width = 130 },
                 txtModelName,
                 btnMakeModel
             });
             txtExistingPath.SetBounds(160, 20, 200, 25);
-            btnBrowseExisting.Text = "Examinar";
+            btnBrowseExisting.Text = "Browse…";
             btnBrowseExisting.SetBounds(370, 20, 80, 25);
             btnBrowseExisting.Click += btnBrowseExisting_Click;
-            btnServe.Text = "Ejecutar servidor";
+            btnServe.Text = "Run server";
             btnServe.SetBounds(160, 60, 130, 30);
             btnServe.Click += btnServe_Click;
-            btnMigrate.Text = "Ejecutar migraciones";
+            btnMigrate.Text = "Run migrations";
             btnMigrate.SetBounds(300, 60, 130, 30);
             btnMigrate.Click += btnMigrate_Click;
             txtControllerName.SetBounds(160, 120, 200, 25);
-            btnMakeController.Text = "Crear Controlador";
+            btnMakeController.Text = "Make controller";
             btnMakeController.SetBounds(370, 120, 120, 25);
             btnMakeController.Click += btnMakeController_Click;
             txtModelName.SetBounds(160, 160, 200, 25);
-            btnMakeModel.Text = "Crear Modelo";
+            btnMakeModel.Text = "Make model";
             btnMakeModel.SetBounds(370, 160, 120, 25);
             btnMakeModel.Click += btnMakeModel_Click;
 

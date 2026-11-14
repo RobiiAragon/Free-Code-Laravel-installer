@@ -1,1 +1,7 @@
-/LaravelWinForms/Program
+bin/
+obj/
+/Program/
+/LaravelWinForms/Program/
+.vs/
+*.user
+*.suo

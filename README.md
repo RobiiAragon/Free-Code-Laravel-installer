@@ -1,29 +1,57 @@
-# Instalador Visual de Laravel (C# WinForms)
+<div align="center">
 
-Esta aplicación proporciona una interfaz gráfica para gestionar proyectos Laravel en Windows.
+# Laravel Visual Installer
 
-## Requisitos previos
+**Create and manage Laravel projects on Windows without typing a single command.**
 
-1. Composer instalado y disponible en el PATH del sistema
-2. PHP instalado y disponible en el PATH del sistema
+![C%23](https://img.shields.io/badge/C%23-512BD4?style=flat-square&logo=dotnet&logoColor=white) ![.NET 8](https://img.shields.io/badge/.NET%208-512BD4?style=flat-square) ![Windows](https://img.shields.io/badge/Windows-0078D6?style=flat-square&logo=windows&logoColor=white) ![License MIT](https://img.shields.io/badge/License%20MIT-2ea44f?style=flat-square)
 
-## Instalación y uso
+**English** · [Español](README.es.md)
 
-1. Compila el proyecto con el script `build-windows.ps1`.
-2. Ejecuta el archivo `.exe` generado en la carpeta `LaravelWinForms/Program`.
-3. Usa la pestaña "Nuevo Proyecto" para crear un nuevo proyecto Laravel.
-4. Usa la pestaña "Proyecto Existente" para gestionar proyectos existentes.
+</div>
 
-## Características
+---
 
-- Creación de nuevos proyectos Laravel
-- Ejecución del servidor de desarrollo
-- Creación de controladores y modelos
-- Ejecución de migraciones
+A small WinForms app that wraps the everyday `composer` and `php artisan` commands in buttons — handy when you're starting with Laravel or teaching it.
 
-## Solución de problemas
+## Features
 
-Si encuentras errores, verifica que:
-- Composer está instalado y funciona correctamente
-- PHP está instalado y funciona correctamente
-- Tienes permisos suficientes en el sistema de archivos
+- 🆕 **New project** — pick a name, a folder and a Laravel version (latest, 12, 11, 10, 9 or 8).
+- ▶️ **Run server** — starts `php artisan serve` at http://127.0.0.1:8000.
+- 🗃️ **Migrations** — runs `php artisan migrate`.
+- 🧩 **Generators** — `make:controller` and `make:model` from a text box.
+- 🪟 The window stays responsive while Composer works, and shows the real error output if something fails.
+
+## Requirements
+
+- Windows 10/11
+- [PHP](https://windows.php.net/download/) and [Composer](https://getcomposer.org/download/) available in your `PATH`
+- [.NET 8 SDK](https://dotnet.microsoft.com/download) to build
+
+## Build
+
+```powershell
+git clone https://github.com/RobiiAragon/Free-Code-Laravel-installer.git
+cd Free-Code-Laravel-installer
+./build-windows.ps1          # single-file .exe in ./Program
+```
+
+Or open `Free-Code-Laravel-installer.sln` in Visual Studio and press <kbd>F5</kbd>.
+
+## Project structure
+
+```
+LaravelWinForms/
+  LaravelCommands.cs   wraps composer / artisan (runs through cmd.exe, captures output)
+  Program.cs           entry point
+  UI/MainForm*.cs      the window
+build-windows.ps1      release build (self-contained, single file)
+```
+
+## License
+
+[MIT](LICENSE)
+
+---
+
+Made by **[Jesús Aragón](https://github.com/RobiiAragon)** · [Portfolio](https://robiiaragon.github.io/portfolio/)
