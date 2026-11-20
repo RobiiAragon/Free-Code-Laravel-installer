@@ -105,5 +105,13 @@ namespace LaravelWinForms.UI
             if (!ValidProject(path) || name.Length == 0) return;
             await RunAsync(btnMakeModel, () => laravel.MakeModel(path, name), $"Model {name} created.", "Couldn't create the model.");
         }
+
+        private async void btnMakeMigration_Click(object sender, EventArgs e)
+        {
+            string path = txtExistingPath.Text.Trim();
+            string name = txtMigrationName.Text.Trim();
+            if (!ValidProject(path) || name.Length == 0) return;
+            await RunAsync(btnMakeMigration, () => laravel.MakeMigration(path, name), $"Migration {name} created.", "Couldn't create the migration.");
+        }
     }
 }

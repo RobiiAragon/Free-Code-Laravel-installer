@@ -6,15 +6,15 @@ namespace LaravelWinForms.UI
         private TabControl tabControl;
         private TabPage tabNew;
         private TabPage tabExisting;
-        private TextBox txtProjectName, txtProjectPath, txtExistingPath, txtControllerName, txtModelName;
+        private TextBox txtProjectName, txtProjectPath, txtExistingPath, txtControllerName, txtModelName, txtMigrationName;
         private ComboBox cmbVersion;
-        private Button btnBrowseNew, btnCreateProject, btnBrowseExisting, btnServe, btnMigrate, btnMakeController, btnMakeModel;
+        private Button btnBrowseNew, btnCreateProject, btnBrowseExisting, btnServe, btnMigrate, btnMakeController, btnMakeModel, btnMakeMigration;
 
         private void InitializeComponent()
         {
             this.tabControl = new TabControl();
-            this.tabNew = new TabPage("Nuevo Proyecto");
-            this.tabExisting = new TabPage("Proyecto Existente");
+            this.tabNew = new TabPage("New project");
+            this.tabExisting = new TabPage("Existing project");
             this.txtProjectName = new TextBox();
             this.txtProjectPath = new TextBox();
             this.cmbVersion = new ComboBox();
@@ -28,8 +28,10 @@ namespace LaravelWinForms.UI
             this.btnMakeController = new Button();
             this.txtModelName = new TextBox();
             this.btnMakeModel = new Button();
+            this.txtMigrationName = new TextBox();
+            this.btnMakeMigration = new Button();
 
-            // --- Nuevo Proyecto ---
+            // --- New project ---
             this.tabNew.Controls.AddRange(new Control[] {
                 new Label { Text = "Project name:", Top = 20, Left = 20, Width = 130 },
                 txtProjectName,
@@ -50,7 +52,7 @@ namespace LaravelWinForms.UI
             btnCreateProject.SetBounds(160, 140, 180, 30);
             btnCreateProject.Click += btnCreateProject_Click;
 
-            // --- Proyecto Existente ---
+            // --- Existing project ---
             this.tabExisting.Controls.AddRange(new Control[] {
                 new Label { Text = "Project folder:", Top = 20, Left = 20, Width = 130 },
                 txtExistingPath,
@@ -62,7 +64,10 @@ namespace LaravelWinForms.UI
                 btnMakeController,
                 new Label { Text = "Model:", Top = 160, Left = 20, Width = 130 },
                 txtModelName,
-                btnMakeModel
+                btnMakeModel,
+                new Label { Text = "Migration:", Top = 200, Left = 20, Width = 130 },
+                txtMigrationName,
+                btnMakeMigration
             });
             txtExistingPath.SetBounds(160, 20, 200, 25);
             btnBrowseExisting.Text = "Browse…";
@@ -82,13 +87,18 @@ namespace LaravelWinForms.UI
             btnMakeModel.Text = "Make model";
             btnMakeModel.SetBounds(370, 160, 120, 25);
             btnMakeModel.Click += btnMakeModel_Click;
+            txtMigrationName.SetBounds(160, 200, 200, 25);
+            txtMigrationName.PlaceholderText = "create_posts_table";
+            btnMakeMigration.Text = "Make migration";
+            btnMakeMigration.SetBounds(370, 200, 120, 25);
+            btnMakeMigration.Click += btnMakeMigration_Click;
 
             // --- TabControl ---
             this.tabControl.Controls.AddRange(new Control[] { this.tabNew, this.tabExisting });
             this.tabControl.Dock = DockStyle.Fill;
             this.Controls.Add(this.tabControl);
             this.Text = "Laravel Visual Installer";
-            this.ClientSize = new System.Drawing.Size(600, 300);
+            this.ClientSize = new System.Drawing.Size(600, 340);
         }
     }
 }

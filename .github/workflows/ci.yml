@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore
+        run: dotnet restore Free-Code-Laravel-installer.sln
+      - name: Build
+        run: dotnet build Free-Code-Laravel-installer.sln -c Release --no-restore
+      - name: Test
+        run: dotnet test LaravelWinForms.Tests/LaravelWinForms.Tests.csproj -c Release --no-restore --verbosity normal
+      - name: Publish single-file exe
+        run: dotnet publish LaravelWinForms/LaravelWinForms.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:DebugType=None -o Program
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LaravelWinForms-win-x64
+          path: Program/*.exe

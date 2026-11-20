@@ -42,8 +42,18 @@ namespace LaravelWinForms
             }
         }
 
+        private bool Reject(string message)
+        {
+            LastOutput = message;
+            return false;
+        }
+
         public bool CreateProject(string name, string path, string? version = null)
         {
+            if (!InputValidator.IsValidProjectName(name))
+                return Reject($"Invalid project name '{name}'. Use only letters, digits, '.', '-' and '_'.");
+            if (!string.IsNullOrEmpty(version) && version != Latest && !InputValidator.IsValidVersion(version))
+                return Reject($"Invalid Laravel version '{version}'.");
             string args = !string.IsNullOrEmpty(version) && version != Latest
                 ? $"create-project laravel/laravel:{version} \"{name}\""
                 : $"create-project laravel/laravel \"{name}\"";
@@ -72,16 +82,22 @@ namespace LaravelWinForms
 
         public bool MakeController(string projectPath, string name)
         {
+            if (!InputValidator.IsValidClassName(name))
+                return Reject($"Invalid controller name '{name}'. Use a PHP class name such as Admin/PostController.");
             return RunCommand("php", $"artisan make:controller {name}", projectPath);
         }
 
         public bool MakeModel(string projectPath, string name)
         {
+            if (!InputValidator.IsValidClassName(name))
+                return Reject($"Invalid model name '{name}'. Use a PHP class name such as Admin/Post.");
             return RunCommand("php", $"artisan make:model {name}", projectPath);
         }
 
         public bool MakeMigration(string projectPath, string name)
         {
+            if (!InputValidator.IsValidMigrationName(name))
+                return Reject($"Invalid migration name '{name}'. Use snake_case, e.g. create_posts_table.");
             return RunCommand("php", $"artisan make:migration {name}", projectPath);
         }
     }
